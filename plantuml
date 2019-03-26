@@ -91,12 +91,6 @@ class CaptureOptTracker{
 }
 
 
-class TaskEngine{
-+ public export(Path path, List<Track> tracks)
-+ public addTrack(Track track)
-+ public deleteTrack(Track track)
-}
-
 class Resource{
 +public Path getPath()
 +public Type getType()
@@ -116,16 +110,20 @@ class VideoPannel
 class PolyPannel
 class TablePannel
 
-Job *-- TaskEngine
+
 
 class Job{
 +public addResource(Resource resource)
 +public deleteResource(Resource resource)
++public List<Resource> getResources()
 +public addPannel(Pannel pannel)
 +public deletePannel(Pannel pannel)
++public List<Pannel> getPannels()
 +public addTrack(Tracker tracker)
 +public deleteTrack(Tracker tracker)
-+public addOperator(OperatorTracker OptTracker )
-+public deleteOperator(OperatorTracker OptTracker)
++public addOperatorTracker(OperatorTracker OptTracker )
++public deleteOperatorTracker(OperatorTracker OptTracker)
++public Trackers getTrackers()
++public export(Path path, List<Track> tracks)
 }
 @enduml
