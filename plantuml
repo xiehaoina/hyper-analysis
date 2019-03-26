@@ -1,0 +1,52 @@
+@startuml
+Title "Tracker类图"
+interface Tracker
+abstract class Model 
+abstract class FrameData 
+
+
+Tracker <|-- TSFileTracker
+Tracker <|-- ConstFileTracker
+Tracker <|-- VideoFileTracker
+Tracker <|-- MergeOptTracker
+Tracker <|-- LookupOptTracker
+Tracker <|-- CaptureTracker
+
+class Tracker{
++ public applyModel(Model model)
++ public FrameData getFrameData(Time time)
++ public Time getBeginTime(void)
++ public Time getEndTime(void)
++ public Time getTimeSlot(void)
++ public Time setTimeSlot(void)
++ public Time getTimeLength(void)
++ public Property getProperty(void)
++ public setProperty(Property property)
+}
+
+class TSFileTracker{
++ public TSFileTracker(File file, TSColumn column , FileType fileType = "CSV")
+}
+
+class ConstFileTracker{
++ public ConstFileTracker(File file, FileType fileType = "CSV")
+}
+
+class VideoFileTracker{
++ public ConstFileTracker(File file, FileType fileType = "mkv")
++ public ConstFileTracker(List<File> files, FileType fileType = "mkv")
+}
+
+class MergeOptTracker{
++ public MergeOptTracker(Track track1 , Track track2)
+}
+
+class LookupOptTracker{
++ public LookupOptTracker(Track mainTrack, Track constTrack)
+}
+
+class CaptureTracker{
++ public CaptureTracker(Track track)
+
+}
+@enduml
