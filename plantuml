@@ -1,10 +1,47 @@
 @startuml
 Title "Tracker类图"
-interface Tracker
-abstract class Model 
-abstract class FrameData 
+
+Model ..> DataFrame
+Model <|-- NativeModel
+Model <|-- ServiceModel
+ServiceModel <|-- MetroCrossDetectionModel
+
+abstract class Model {
++ public DataFrame call(DataFrame df)
+}
+
+abstract class NativeModel
+
+abstract class ServiceModel {
+
+}
+
+class MetroCrossDetectionModel{
++ public setDetectRegion(List<Position>)  
+}
 
 
+
+DataFrame <|-- ImageDataFrame
+DataFrame <|-- TableDataFrame
+DataFrame <|-- KVDataFrame
+
+abstract class DataFrame{
++ public DataFrame merge(DataFrame df)
++ public void export(Path path)
+}
+
+class ImageDataFrame{
++ public ImageDataFrame merge(KVDataFrame df)
++ public ImageDataFrame merge(ImageDataFrame df)
+}
+class TableDataFrame
+class KVDataFrame
+
+
+
+Tracker --> Model
+Tracker *-- DataFrame 
 Tracker <|-- TSFileTracker
 Tracker <|-- ConstFileTracker
 Tracker <|-- VideoFileTracker
@@ -12,9 +49,9 @@ Tracker <|-- MergeOptTracker
 Tracker <|-- LookupOptTracker
 Tracker <|-- CaptureTracker
 
-class Tracker{
+abstract class Tracker{
 + public applyModel(Model model)
-+ public FrameData getFrameData(Time time)
++ public DataFrame getDataFrame(Time time)
 + public Time getBeginTime(void)
 + public Time getEndTime(void)
 + public Time getTimeSlot(void)
