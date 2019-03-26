@@ -8,6 +8,8 @@ ServiceModel <|-- MetroCrossDetectionModel
 
 abstract class Model {
 + public DataFrame call(DataFrame df)
++ public Property getProperty(void)
++ public setProperty(Property property)
 }
 
 abstract class NativeModel
@@ -45,9 +47,10 @@ Tracker *-- DataFrame
 Tracker <|-- TSFileTracker
 Tracker <|-- ConstFileTracker
 Tracker <|-- VideoFileTracker
-Tracker <|-- MergeOptTracker
-Tracker <|-- LookupOptTracker
-Tracker <|-- CaptureTracker
+Tracker <|-- OperatorTracker
+OperatorTracker <|-- MergeOptTracker
+OperatorTracker <|-- LookupOptTracker
+OperatorTracker<|-- CaptureOptTracker
 
 abstract class Tracker{
 + public applyModel(Model model)
@@ -62,7 +65,7 @@ abstract class Tracker{
 }
 
 class TSFileTracker{
-+ public TSFileTracker(File file, TSColumn column , FileType fileType = "CSV")
++ public TSFileTracker(File file, FileType fileType = "CSV", TSColumn column )
 }
 
 class ConstFileTracker{
@@ -70,8 +73,8 @@ class ConstFileTracker{
 }
 
 class VideoFileTracker{
-+ public ConstFileTracker(File file, FileType fileType = "mkv")
-+ public ConstFileTracker(List<File> files, FileType fileType = "mkv")
++ public ConstFileTracker(File file, )
++ public ConstFileTracker(List<File> files)
 }
 
 class MergeOptTracker{
@@ -82,8 +85,47 @@ class LookupOptTracker{
 + public LookupOptTracker(Track mainTrack, Track constTrack)
 }
 
-class CaptureTracker{
-+ public CaptureTracker(Track track)
+class CaptureOptTracker{
++ public CaptureOptTracker(Track track)
 
+}
+
+
+class TaskEngine{
++ public export(Path path, List<Track> tracks)
++ public addTrack(Track track)
++ public deleteTrack(Track track)
+}
+
+class Resource{
++public Path getPath()
++public Type getType()
+}
+
+
+Pannel<|-- TextPannel
+Pannel<|-- VideoPannel
+Pannel<|-- PolyPannel
+Pannel<|-- TablePannel
+
+abstract class Pannel{
++public Pannel(Track track)
+}
+class TextPannel
+class VideoPannel
+class PolyPannel
+class TablePannel
+
+Job *-- TaskEngine
+
+class Job{
++public addResource(Resource resource)
++public deleteResource(Resource resource)
++public addPannel(Pannel pannel)
++public deletePannel(Pannel pannel)
++public addTrack(Tracker tracker)
++public deleteTrack(Tracker tracker)
++public addOperator(OperatorTracker OptTracker )
++public deleteOperator(OperatorTracker OptTracker)
 }
 @enduml
