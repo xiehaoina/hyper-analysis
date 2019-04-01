@@ -29,6 +29,8 @@ DataFrame <|-- TableDataFrame
 DataFrame <|-- KVDataFrame
 
 abstract class DataFrame{
++ public Timestamp getFrameTimestamp() 
++ public Json toJson()
 + public DataFrame merge(DataFrame df)
 + public void export(Path path)
 }
@@ -55,11 +57,14 @@ OperatorTracker<|-- CaptureOptTracker
 abstract class Tracker{
 + public applyModel(Model model)
 + public DataFrame getDataFrame(Time time)
++ public List<DataFrame> getNextDataFrame(int frameNum)
++ public void setBaseTime(void)
++ public Time getBaseTime(void)
 + public Time getBeginTime(void)
 + public Time getEndTime(void)
 + public Time getTimeSlot(void)
-+ public Time setTimeSlot(void)
-+ public Time getTimeLength(void)
++ public void setTimeSlot(Time)
++ public Time getPeriod(void)
 + public Property getProperty(void)
 + public setProperty(Property property)
 }
